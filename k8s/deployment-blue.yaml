@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: foodfrenzy
-          image: YOUR_ECR_URL/foodfrenzy-app:latest
+          image: 119750095825.dkr.ecr.ap-southeast-2.amazonaws.com/foodfrenzy-app/foodfrenzy-app:latest
           ports:
             - containerPort: 8080
           env:
