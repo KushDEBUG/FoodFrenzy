@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: foodfrenzy-service
+  labels:
+    app: foodfrenzy
+spec:
+  selector:
+    app: foodfrenzy
+    version: green
+  type: LoadBalancer
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
