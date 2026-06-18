@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foodfrenzy-green
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: foodfrenzy
+      version: green
+  template:
+    metadata:
+      labels:
+        app: foodfrenzy
+        version: green
+    spec:
+      containers:
+        - name: foodfrenzy
+          image: YOUR_ECR_URL/foodfrenzy-app:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: foodfrenzy-secrets
+                  key: db-url
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: foodfrenzy-secrets
+                  key: db-username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: foodfrenzy-secrets
+                  key: db-password
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "300m"
