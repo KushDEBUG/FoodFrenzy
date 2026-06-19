@@ -102,8 +102,9 @@ jobs:
       run: |
         aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
         kubectl cluster-info
-        sed -i "s|YOUR_ECR_URL/foodfrenzy-app:latest|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" k8s/deployment-green.yaml
+        sed -i "s|119750095825.dkr.ecr.ap-southeast-2.amazonaws.com/foodfrenzy-app:latest|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" k8s/deployment-green.yaml
         kubectl apply -f k8s/deployment-green.yaml
+        kubectl apply -f k8s/service.yaml
         kubectl rollout status deployment/foodfrenzy-green --timeout=300s
         kubectl patch service foodfrenzy-service -p '{"spec":{"selector":{"version":"green"}}}'
         echo "✅ Traffic switched to GREEN"
